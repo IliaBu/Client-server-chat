@@ -1,4 +1,3 @@
-#!/bin/python3
 import socket
 import threading
 
@@ -8,6 +7,7 @@ nickname = input("Choose your nickname: ")
 # Connecting To Server
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 2426))
+
 
 # Listening to Server and Sending Nickname
 def receive():
@@ -24,17 +24,19 @@ def receive():
                 print(message)
         except:
             # Close Connection When Error
-            print("An error occured!")
+            print("An error occurred!")
             client.close()
             break
 
+
 def write():
-    text=''
+    text = ''
     while text != 'exit':
         text = input()
         message = '{}: {}'.format(nickname, text)
         client.send(message.encode('utf8'))
     client.close()
+
 
 # Starting Threads For Listening And Writing
 receive_thread = threading.Thread(target=receive)
